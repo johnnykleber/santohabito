@@ -94,6 +94,7 @@ const editorialSections = [
         name: "Sagrada Família 'Pedra Viva'",
         category: "Escultura Contemporânea",
         price: 129.90,
+        tag: "ECO-DESIGN",
         image: "/products/sagrada-familia-real.jpg",
         description: "A solidez da fé esculpida com tecnologia moderna. Uma peça minimalista com textura de granito natural, leve e resistente. O design sem faces foca na linguagem corporal do acolhimento e proteção.",
         warning: "Peça leve: recomendamos o uso de fita dupla face em locais com vento.",
@@ -288,6 +289,13 @@ const EditorialSection = ({ section }) => (
                         alt={product.name}
                         className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-1000 ease-out grayscale-[10%] group-hover:grayscale-0"
                       />
+
+                      {/* Tag Personalizada (ex: ECO-DESIGN) */}
+                      {product.tag && (
+                        <div className="absolute top-6 left-6 z-20 bg-[#FAFAF9] px-4 py-2 shadow-sm border border-[#D6D3CD]/50">
+                          <span className="text-[#8A9A8A] uppercase tracking-widest text-xs font-serif font-medium">{product.tag}</span>
+                        </div>
+                      )}
                     </>
                   ) : (
                     /* Card Simples para "Em Breve" ou "Encerrado" */
