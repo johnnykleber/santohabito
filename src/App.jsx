@@ -474,9 +474,15 @@ const Footer = () => (
       </div>
 
       <div className="flex gap-6 text-sm text-[#78716C]">
-        <a href="#" className="hover:text-[#4A4542] transition">Instagram</a>
-        <a href="#" className="hover:text-[#4A4542] transition">Pinterest</a>
-        <a href="#" className="hover:text-[#4A4542] transition">Contato</a>
+        <a
+          href="https://instagram.com/osantohabito"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-[#4A4542] transition flex items-center gap-2"
+        >
+          <Instagram size={18} />
+          <span>@osantohabito</span>
+        </a>
       </div>
 
       <div className="text-[#9CA3AF] text-xs text-center md:text-right max-w-xs">
