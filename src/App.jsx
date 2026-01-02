@@ -488,29 +488,43 @@ const Footer = () => (
 
 // --- APP PRINCIPAL ---
 
-const SuccessView = ({ onBack }) => (
-  <div className="min-h-screen bg-[#FAFAF9] flex flex-col items-center justify-center p-6 text-center animate-fade-in-up">
-    <div className="w-20 h-20 bg-[#EBF2F5] rounded-full flex items-center justify-center mb-8 shadow-sm">
-      <Mail className="w-10 h-10 text-[#8A9A8A]" />
+const SuccessView = ({ onBack }) => {
+  useEffect(() => {
+    // Tenta iniciar o download automático
+    const downloadUrl = "/guia-santo-habito.pdf"; // Certifique-se de que este arquivo existe na pasta public
+
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.setAttribute('download', 'Guia-Santo-Habito.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#FAFAF9] flex flex-col items-center justify-center p-6 text-center animate-fade-in-up">
+      <div className="w-20 h-20 bg-[#EBF2F5] rounded-full flex items-center justify-center mb-8 shadow-sm">
+        <Mail className="w-10 h-10 text-[#8A9A8A]" />
+      </div>
+      <h2 className="text-4xl md:text-5xl font-serif text-[#4A4542] mb-6">Inscrição Confirmada!</h2>
+      <div className="h-[1px] w-24 bg-[#B59E75]/40 mx-auto mb-8"></div>
+      <p className="text-lg text-[#78716C] max-w-lg mb-8 leading-relaxed">
+        Bem-vindo à comunidade Santo Hábito. <br />
+        O download do <strong>Guia de Oração</strong> deve iniciar automaticamente.
+      </p>
+      <p className="text-sm text-[#9CA3AF] mb-12">
+        (Caso não inicie, verifique seus pop-ups ou clique <a href="/guia-santo-habito.pdf" download className="underline hover:text-[#B59E75]">aqui</a>)
+      </p>
+      <button
+        onClick={onBack}
+        className="bg-[#8A9A8A] text-[#FAFAF9] px-10 py-4 rounded-sm hover:bg-[#768576] transition shadow-sm flex items-center gap-3"
+      >
+        <ArrowRight className="rotate-180" size={18} />
+        <span>Voltar para o site</span>
+      </button>
     </div>
-    <h2 className="text-4xl md:text-5xl font-serif text-[#4A4542] mb-6">Inscrição Confirmada!</h2>
-    <div className="h-[1px] w-24 bg-[#B59E75]/40 mx-auto mb-8"></div>
-    <p className="text-lg text-[#78716C] max-w-lg mb-8 leading-relaxed">
-      Bem-vindo à comunidade Santo Hábito. <br />
-      O seu <strong>Guia de Oração (PDF)</strong> já foi enviado para o seu e-mail.
-    </p>
-    <p className="text-sm text-[#9CA3AF] mb-12">
-      (Verifique também sua caixa de spam ou promoções)
-    </p>
-    <button
-      onClick={onBack}
-      className="bg-[#8A9A8A] text-[#FAFAF9] px-10 py-4 rounded-sm hover:bg-[#768576] transition shadow-sm flex items-center gap-3"
-    >
-      <ArrowRight className="rotate-180" size={18} />
-      <span>Voltar para o site</span>
-    </button>
-  </div>
-);
+  );
+};
 
 // --- APP PRINCIPAL ---
 
