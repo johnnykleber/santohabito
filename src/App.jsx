@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Menu, X, Heart, ShieldAlert, ArrowRight, Instagram, Mail, Check, Star } from 'lucide-react';
 
 // --- PALETA DE CORES (Tailwind Classes & Hex References) ---
@@ -12,28 +12,74 @@ import { ShoppingBag, Menu, X, Heart, ShieldAlert, ArrowRight, Instagram, Mail, 
 // --- DADOS EDITORIAIS (Storytelling) ---
 const editorialSections = [
   {
-    id: "missa-serena",
-    title: "Silêncio na Missa",
-    subtitle: "Para mãos pequenas e inquietas",
+    id: "aprender-brincando",
+    title: "Aprender Brincando",
+    subtitle: "Lançamento Exclusivo",
     bgColor: "bg-[#EBF2F5]", // Azul Mariano Pálido
     products: [
       {
-        id: 1,
-        name: "Decenário 'Silêncio'",
-        category: "Educação na Fé",
-        price: 45.90,
-        image: "https://images.unsplash.com/photo-1628151016024-bbd7e0081079?q=80&w=800&auto=format&fit=crop",
-        description: "Não é apenas um brinquedo, é uma introdução tátil à oração. Feito de silicone macio em tons pastéis, ele cai no chão da igreja sem fazer barulho. Perfeito para manter as mãos ocupadas e o coração calmo.",
-        details: "Silicone BPA Free • Toque macio • Lavável"
+        id: 201,
+        name: "Kit Litúrgico 'Pequeno Celebrante'",
+        category: "Brinquedo Educativo",
+        price: 159.90,
+        mlLink: "https://lista.mercadolivre.com.br/_CustId_260840432",
+        image: "/products/kit-liturgico-real.jpg",
+        description: "A criança aprende amando e imitando. Este conjunto completo (14 peças) permite que os pequenos compreendam a sacralidade da Missa através do toque. Do Cálice às Galhetas, cada item foi desenhado para mãos curiosas que buscam o céu.",
+        details: "Sob Encomenda • 14 Peças (Cálice, Cibório, Castiçais...) • Bioplástico PLA"
+      }
+    ]
+  },
+  {
+    id: "pequenos-guardioes",
+    title: "Pequenos Guardiões",
+    subtitle: "Chaveiros Low Poly Pintados à Mão",
+    bgColor: "bg-[#F3F4F6]", // Cinza Suave
+    products: [
+      {
+        id: 101,
+        name: "São José",
+        category: "Coleção Low Poly",
+        price: 35.90,
+        mlLink: "https://lista.mercadolivre.com.br/_CustId_260840432",
+        image: "/products/low-poly/sao-jose-real.jpg",
+        description: "Guardião silencioso. Ideal para chaves de casa. Traz o lírio da pureza e o Menino Jesus. Uma lembrança constante da proteção paterna.",
+        details: "Sob Encomenda • Pintado à Mão • Marrom, Branco, Verde"
       },
       {
-        id: 5,
-        name: "Guia Visual da Missa",
-        category: "Educação",
-        price: 29.90,
-        image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=800&auto=format&fit=crop",
-        description: "Transforme o 'quanto falta para acabar?' em 'olha o que vem agora!'. Cartões ilustrados em aquarela que explicam a liturgia de forma visual.",
-        details: "Papel Couché Fosco • Anel de metal dourado"
+        id: 102,
+        name: "Santo Antônio",
+        category: "Coleção Low Poly",
+        price: 35.90,
+        image: "/products/low-poly/santo-antonio-real.jpg",
+        description: "Para quem busca bênçãos diárias. Representado com o Menino Jesus, símbolo de proximidade com Deus. O Santo dos milagres no seu bolso.",
+        details: "Sob Encomenda • Pintado à Mão • Marrom Franciscano, Pele, Branco"
+      },
+      {
+        id: 103,
+        name: "Santa Teresinha",
+        category: "Coleção Low Poly",
+        price: 35.90,
+        image: "/products/low-poly/santa-teresinha-real.jpg",
+        description: "Simplicidade e amor nos pequenos gestos. Carrega as rosas e o crucifixo. Uma chuva de rosas para o seu dia a dia.",
+        details: "Sob Encomenda • Pintado à Mão • Marrom Carmelita, Creme, Vermelho"
+      },
+      {
+        id: 104,
+        name: "Nossa Senhora",
+        category: "Coleção Low Poly",
+        price: 35.90,
+        image: "/products/low-poly/nossa-senhora-real.jpg",
+        description: "Proteção materna em todos os caminhos. Manto azul e coroa dourada. A Mãe Soberana, sempre por perto.",
+        details: "Sob Encomenda • Pintado à Mão • Azul Celeste/Royal, Branco, Dourado"
+      },
+      {
+        id: 105,
+        name: "Kit Trindade de Proteção",
+        category: "Coleção Completa",
+        price: 99.90,
+        image: "/products/low-poly/kit-tres-santos.jpg",
+        description: "A união perfeita de proteção e fé. Leve para casa ou presenteie com o conjunto que reúne a família sagrada e os amigos do céu.",
+        details: "Sob Encomenda • Escolha 3 santos do catálogo"
       }
     ]
   },
@@ -44,14 +90,16 @@ const editorialSections = [
     bgColor: "bg-[#FAFAF9]", // Off-White
     products: [
       {
-        id: 2,
-        name: "Altar 'Vigília'",
-        category: "Decoração Litúrgica",
-        price: 189.90,
-        image: "https://images.unsplash.com/photo-1512626120412-faf41adb4874?q=80&w=800&auto=format&fit=crop",
-        description: "Seu lar é uma igreja doméstica. Este altar foi desenhado em madeira clara para integrar-se à decoração sem perder a sacralidade. Linhas limpas, foco no essencial.",
-        details: "Madeira Clara Maciça • Acabamento em Cera Natural"
+        id: 202,
+        name: "Sagrada Família 'Pedra Viva'",
+        category: "Escultura Contemporânea",
+        price: 129.90,
+        image: "/products/sagrada-familia-real.jpg",
+        description: "A solidez da fé esculpida com tecnologia moderna. Uma peça minimalista com textura de granito natural, leve e resistente. O design sem faces foca na linguagem corporal do acolhimento e proteção.",
+        warning: "Peça leve: recomendamos o uso de fita dupla face em locais com vento.",
+        details: "Sob Encomenda • Eco-Mármore (PLA com fibra de pedra) • Acabamento Fosco"
       },
+
       {
         id: 4,
         name: "Vela Pura Cera",
@@ -59,7 +107,7 @@ const editorialSections = [
         price: 62.00,
         image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=800&auto=format&fit=crop",
         description: "O cheiro suave do mel e a queima limpa. Uma luz dourada que recorda a presença constante de Deus. Sem parafinas, apenas natureza.",
-        details: "100% Cera de Abelha • Pavio de Algodão • Duração 30h"
+        details: "Sob Encomenda • 100% Cera de Abelha • Duração 30h"
       }
     ]
   },
@@ -75,10 +123,48 @@ const editorialSections = [
         name: "Kit São Nicolau",
         category: "Sazonal",
         price: 39.90,
-        image: "https://images.unsplash.com/photo-1590059390234-927a7c588e40?q=80&w=800&auto=format&fit=crop",
+        ordersClosed: true,
+        // image removed
         description: "Resgate a verdadeira história por trás do Natal. Cortadores para biscoitos ou massinha que ensinam sobre o bispo generoso de Mira.",
         warning: "Material PLA: Use com massinha ou proteja com filme para alimentos.",
-        details: "Design Exclusivo • Biodegradável • Acompanha Receita"
+        details: "Sob Encomenda • Design Exclusivo • Biodegradável"
+      }
+    ]
+  },
+  {
+    id: "laboratorio-criativo",
+    title: "Laboratório Criativo",
+    subtitle: "O que vem por aí",
+    bgColor: "bg-[#FAFAF9]", // Off-White
+    products: [
+      {
+        id: 2,
+        name: "Altar 'Vigília'",
+        category: "Decoração Litúrgica",
+        price: 189.90,
+        comingSoon: true,
+        description: "Seu lar é uma igreja doméstica. Este altar foi desenhado em madeira clara para integrar-se à decoração sem perder a sacralidade. Linhas limpas, foco no essencial.",
+        details: "Em Breve • Madeira Clara Maciça • Cera Natural"
+      },
+      {
+        id: 5,
+        name: "Guia Visual da Missa",
+        category: "Educação",
+        price: 29.90,
+        comingSoon: true,
+        // image removed
+        description: "Transforme o 'quanto falta para acabar?' em 'olha o que vem agora!'. Cartões ilustrados em aquarela que explicam a liturgia de forma visual.",
+        details: "Em Breve • Papel Couché Fosco • Anel de metal dourado"
+      },
+      {
+        id: 1,
+        name: "Decenário 'Silêncio'",
+        category: "Educação na Fé",
+        price: 45.90,
+        comingSoon: true,
+        // image removed
+        description: "Não é apenas um brinquedo, é uma introdução tátil à oração. Feito de silicone macio em tons pastéis, ele cai no chão da igreja sem fazer barulho. Perfeito para manter as mãos ocupadas e o coração calmo.",
+        details: "Em Desenvolvimento • Silicone BPA Free • Toque macio"
       }
     ]
   }
@@ -86,7 +172,7 @@ const editorialSections = [
 
 // --- COMPONENTES ---
 
-const Navigation = ({ cartCount, setIsCartOpen }) => {
+const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -108,27 +194,18 @@ const Navigation = ({ cartCount, setIsCartOpen }) => {
 
           {/* Links Desktop */}
           <div className="hidden md:flex space-x-10 items-center">
-            <a href="#missa-serena" className="text-sm uppercase tracking-widest text-[#78716C] hover:text-[#B59E75] transition">Crianças</a>
+            <a href="#aprender-brincando" className="text-sm uppercase tracking-widest text-[#78716C] hover:text-[#B59E75] transition">Crianças</a>
+            <a href="#pequenos-guardioes" className="text-sm uppercase tracking-widest text-[#78716C] hover:text-[#B59E75] transition">Chaveiros</a>
             <a href="#altar-domestico" className="text-sm uppercase tracking-widest text-[#78716C] hover:text-[#B59E75] transition">Casa</a>
             <a href="#sazonal" className="text-sm uppercase tracking-widest text-[#78716C] hover:text-[#B59E75] transition">Sazonal</a>
           </div>
 
-          {/* Cart Actions */}
+          {/* Cart Actions Removed - Landing Page Mode */}
           <div className="flex-1 flex justify-end">
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="flex items-center gap-2 text-[#4A4542] hover:text-[#B59E75] transition group"
-            >
-              <span className="hidden md:inline text-sm font-medium tracking-wide">Sacola</span>
-              <div className="relative">
-                <ShoppingBag size={20} className="group-hover:scale-105 transition-transform" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#8A9A8A] text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
-              </div>
-            </button>
+            <a href="#newsletter" className="hidden md:flex items-center gap-2 text-[#4A4542] hover:text-[#B59E75] transition group">
+              <span className="text-sm font-medium tracking-wide">Fique por dentro</span>
+              <Mail size={20} className="group-hover:scale-105 transition-transform" />
+            </a>
           </div>
         </div>
       </div>
@@ -137,7 +214,8 @@ const Navigation = ({ cartCount, setIsCartOpen }) => {
       {isMenuOpen && (
         <div className="md:hidden bg-[#EAE6DF] border-b border-[#D6D3CD] absolute w-full left-0">
           <div className="px-6 py-6 space-y-4">
-            <a href="#missa-serena" onClick={() => setIsMenuOpen(false)} className="block text-lg font-serif text-[#4A4542]">Missa com Crianças</a>
+            <a href="#aprender-brincando" onClick={() => setIsMenuOpen(false)} className="block text-lg font-serif text-[#4A4542]">Missa com Crianças</a>
+            <a href="#pequenos-guardioes" onClick={() => setIsMenuOpen(false)} className="block text-lg font-serif text-[#4A4542]">Chaveiros</a>
             <a href="#altar-domestico" onClick={() => setIsMenuOpen(false)} className="block text-lg font-serif text-[#4A4542]">Altar Doméstico</a>
             <a href="#sazonal" onClick={() => setIsMenuOpen(false)} className="block text-lg font-serif text-[#4A4542]">Coleção Sazonal</a>
           </div>
@@ -165,7 +243,7 @@ const Hero = () => (
       </p>
 
       <div className="flex flex-col sm:flex-row justify-center gap-6 animate-fade-in-up delay-300">
-        <a href="#missa-serena" className="group flex items-center justify-center gap-3 px-10 py-4 bg-[#8A9A8A] text-[#FAFAF9] hover:bg-[#768576] transition rounded-sm shadow-sm hover:shadow-md">
+        <a href="#aprender-brincando" className="group flex items-center justify-center gap-3 px-10 py-4 bg-[#8A9A8A] text-[#FAFAF9] hover:bg-[#768576] transition rounded-sm shadow-sm hover:shadow-md">
           <span className="tracking-wide">Explorar Coleção</span>
           <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform opacity-80" />
         </a>
@@ -174,7 +252,7 @@ const Hero = () => (
   </header>
 );
 
-const EditorialSection = ({ section, addToCart }) => (
+const EditorialSection = ({ section }) => (
   <section id={section.id} className={`${section.bgColor} py-24 md:py-32`}>
     <div className="max-w-7xl mx-auto px-6">
 
@@ -198,19 +276,46 @@ const EditorialSection = ({ section, addToCart }) => (
             <div key={product.id} className={`flex flex-col md:flex-row ${isReversed ? 'md:flex-row-reverse' : ''} gap-12 md:gap-24 items-center`}>
 
               {/* Imagem Editorial */}
+              {/* Imagem Editorial ou Placeholder */}
               <div className="w-full md:w-1/2 relative group">
-                <div className="aspect-[3/4] overflow-hidden rounded-sm bg-[#EAE6DF] relative shadow-sm">
-                  <div className="absolute inset-0 bg-[#4A4542]/0 group-hover:bg-[#4A4542]/5 transition-colors duration-500 z-10"></div>
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-1000 ease-out grayscale-[10%] group-hover:grayscale-0"
-                  />
+                <div className={`aspect-[3/4] overflow-hidden rounded-sm relative shadow-sm ${product.image ? 'bg-[#EAE6DF]' : 'bg-[#E5E5E5] flex items-center justify-center'}`}>
+
+                  {product.image ? (
+                    <>
+                      <div className="absolute inset-0 bg-[#4A4542]/0 group-hover:bg-[#4A4542]/5 transition-colors duration-500 z-10"></div>
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-1000 ease-out grayscale-[10%] group-hover:grayscale-0"
+                      />
+                    </>
+                  ) : (
+                    /* Card Simples para "Em Breve" ou "Encerrado" */
+                    <div className="bg-[#FAFAF9] p-8 w-64 text-center shadow-lg border border-[#D6D3CD] relative z-20">
+                      <div className="h-[1px] w-8 bg-[#B59E75] mx-auto mb-4"></div>
+                      <span className="block text-[#B59E75] text-xs uppercase tracking-widest mb-2 font-medium">
+                        {product.ordersClosed ? "Encerrado" : "Em Breve"}
+                      </span>
+                      <h4 className="font-serif text-[#4A4542] text-xl leading-snug">{product.name}</h4>
+                    </div>
+                  )}
+
+                  {/* Overlay Encerrado (Apenas se tiver imagem) */}
+                  {product.ordersClosed && product.image && (
+                    <div className="absolute inset-0 bg-[#4A4542]/60 z-30 flex items-center justify-center backdrop-blur-[1px]">
+                      <div className="bg-[#FAFAF9] px-6 py-3 shadow-lg transform rotate-[-3deg] border border-[#B59E75]">
+                        <span className="text-[#4A4542] font-serif text-lg tracking-wider uppercase">Encerrado os Pedidos</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                {/* Legenda Flutuante */}
-                <div className={`absolute -bottom-6 ${isReversed ? '-left-6' : '-right-6'} bg-[#FAFAF9] p-6 shadow-xl max-w-xs hidden md:block z-20 border border-[#EAE6DF]`}>
-                  <p className="font-serif italic text-[#78716C] text-sm leading-relaxed">"{product.description.slice(0, 60)}..."</p>
-                </div>
+
+                {/* Legenda Flutuante (Apenas se tiver imagem) */}
+                {product.image && (
+                  <div className={`absolute -bottom-6 ${isReversed ? '-left-6' : '-right-6'} bg-[#FAFAF9] p-6 shadow-xl max-w-xs hidden md:block z-20 border border-[#EAE6DF]`}>
+                    <p className="font-serif italic text-[#78716C] text-sm leading-relaxed">"{product.description.slice(0, 60)}..."</p>
+                  </div>
+                )}
               </div>
 
               {/* Conteúdo Texto */}
@@ -234,14 +339,36 @@ const EditorialSection = ({ section, addToCart }) => (
                   )}
 
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8">
-                    <span className="text-3xl font-serif text-[#4A4542]">R$ {product.price.toFixed(2).replace('.', ',')}</span>
-                    <button
-                      onClick={() => addToCart(product)}
-                      className="w-full sm:w-auto bg-[#8A9A8A] hover:bg-[#768576] text-[#FAFAF9] px-10 py-4 rounded-sm transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-3 group"
-                    >
-                      <span className="tracking-wide font-medium">Adicionar</span>
-                      <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform opacity-80" />
-                    </button>
+                    {!product.comingSoon && (
+                      <span className="text-3xl font-serif text-[#4A4542]">R$ {product.price.toFixed(2).replace('.', ',')}</span>
+                    )}
+
+                    {product.ordersClosed ? (
+                      <button
+                        disabled
+                        className="w-full sm:w-auto bg-[#D6D3CD] text-[#FAFAF9] px-8 py-4 rounded-sm cursor-not-allowed flex items-center justify-center gap-3 opacity-80"
+                      >
+                        <span className="tracking-wide font-medium">Indisponível</span>
+                      </button>
+                    ) : product.comingSoon ? (
+                      <a
+                        href="#newsletter"
+                        className="w-full sm:w-auto bg-[#4A4542] text-[#FAFAF9] hover:bg-[#383432] px-8 py-4 rounded-sm transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-3 group"
+                      >
+                        <span className="tracking-wide font-medium">Estou Interessado</span>
+                        <Mail size={18} className="group-hover:translate-x-1 transition-transform opacity-80" />
+                      </a>
+                    ) : (
+                      <a
+                        href={product.mlLink || "https://lista.mercadolivre.com.br/_CustId_260840432"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto bg-[#FFE600] text-[#2D3277] hover:bg-[#F3D900] px-8 py-4 rounded-sm transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-3 group"
+                      >
+                        <span className="tracking-wide font-bold">Comprar no Mercado Livre</span>
+                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
@@ -271,26 +398,72 @@ const Manifesto = () => (
   </section>
 );
 
-const Newsletter = () => (
-  <section className="py-24 bg-[#FAFAF9] border-t border-[#EAE6DF]">
-    <div className="max-w-xl mx-auto px-6 text-center">
-      <h3 className="text-2xl font-serif text-[#4A4542] mb-4">Guia Gratuito de Oração</h3>
-      <p className="text-[#78716C] mb-8 font-light">
-        Receba nosso PDF "7 Formas de Criar um Canto de Oração" e inspire-se.
-      </p>
-      <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
-        <input
-          type="email"
-          placeholder="Seu e-mail principal"
-          className="flex-1 bg-white border border-[#D6D3CD] px-4 py-3 text-[#4A4542] focus:outline-none focus:border-[#8A9A8A] rounded-sm placeholder-[#9CA3AF]"
-        />
-        <button className="bg-[#4A4542] text-[#FAFAF9] px-6 py-3 font-medium hover:bg-[#383432] transition rounded-sm">
-          Enviar
-        </button>
-      </form>
-    </div>
-  </section>
-);
+const Newsletter = ({ onSuccess }) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.target);
+
+    try {
+      const response = await fetch("https://api.sheetmonkey.io/form/qNQsBWZcCapi83JP1g4XyY", {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        if (onSuccess) onSuccess();
+      } else {
+        alert("Erro ao enviar. Por favor, tente novamente.");
+      }
+    } catch (error) {
+      console.error("Erro:", error);
+      alert("Erro de conexão.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <section className="py-24 bg-[#FAFAF9] border-t border-[#EAE6DF]">
+      <div className="max-w-xl mx-auto px-6 text-center">
+        <h3 className="text-2xl font-serif text-[#4A4542] mb-4">Guia Gratuito de Oração</h3>
+        <p className="text-[#78716C] mb-8 font-light">
+          Receba nosso PDF "7 Formas de Criar um Canto de Oração" e inspire-se.
+        </p>
+
+        <form className="flex flex-col gap-4 max-w-sm mx-auto" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="Name"
+            required
+            placeholder="Seu nome"
+            className="w-full bg-white border border-[#D6D3CD] px-4 py-3 text-[#4A4542] focus:outline-none focus:border-[#8A9A8A] rounded-sm placeholder-[#9CA3AF]"
+          />
+
+          <input
+            type="email"
+            name="Email"
+            required
+            placeholder="Seu e-mail principal"
+            className="w-full bg-white border border-[#D6D3CD] px-4 py-3 text-[#4A4542] focus:outline-none focus:border-[#8A9A8A] rounded-sm placeholder-[#9CA3AF]"
+          />
+
+          <input type="hidden" name="Created" value="x-sheetmonkey-current-date-time" />
+
+          <button
+            disabled={isSubmitting}
+            className="w-full bg-[#4A4542] text-[#FAFAF9] px-6 py-3 font-medium hover:bg-[#383432] transition rounded-sm disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? "Enviando..." : "Receber Guia"}
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+};
 
 const Footer = () => (
   <footer className="bg-[#EAE6DF] border-t border-[#D6D3CD] py-16">
@@ -315,105 +488,59 @@ const Footer = () => (
 
 // --- APP PRINCIPAL ---
 
-export default function App() {
-  const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+const SuccessView = ({ onBack }) => (
+  <div className="min-h-screen bg-[#FAFAF9] flex flex-col items-center justify-center p-6 text-center animate-fade-in-up">
+    <div className="w-20 h-20 bg-[#EBF2F5] rounded-full flex items-center justify-center mb-8 shadow-sm">
+      <Mail className="w-10 h-10 text-[#8A9A8A]" />
+    </div>
+    <h2 className="text-4xl md:text-5xl font-serif text-[#4A4542] mb-6">Inscrição Confirmada!</h2>
+    <div className="h-[1px] w-24 bg-[#B59E75]/40 mx-auto mb-8"></div>
+    <p className="text-lg text-[#78716C] max-w-lg mb-8 leading-relaxed">
+      Bem-vindo à comunidade Santo Hábito. <br />
+      O seu <strong>Guia de Oração (PDF)</strong> já foi enviado para o seu e-mail.
+    </p>
+    <p className="text-sm text-[#9CA3AF] mb-12">
+      (Verifique também sua caixa de spam ou promoções)
+    </p>
+    <button
+      onClick={onBack}
+      className="bg-[#8A9A8A] text-[#FAFAF9] px-10 py-4 rounded-sm hover:bg-[#768576] transition shadow-sm flex items-center gap-3"
+    >
+      <ArrowRight className="rotate-180" size={18} />
+      <span>Voltar para o site</span>
+    </button>
+  </div>
+);
 
-  const addToCart = (product) => {
-    setCart([...cart, product]);
-    setIsCartOpen(true);
-  };
+// --- APP PRINCIPAL ---
 
-  const removeFromCart = (indexToRemove) => {
-    setCart(cart.filter((_, index) => index !== indexToRemove));
-  };
+const App = () => {
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const cartTotal = cart.reduce((acc, item) => acc + item.price, 0);
+  if (showSuccess) {
+    return <SuccessView onBack={() => setShowSuccess(false)} />;
+  }
 
   return (
     <div className="font-sans antialiased text-[#4A4542] bg-[#FAFAF9] selection:bg-[#EAE6DF] selection:text-[#4A4542]">
-      <Navigation cartCount={cart.length} setIsCartOpen={setIsCartOpen} />
+      <Navigation />
 
       <main>
         <Hero />
 
         {editorialSections.map((section) => (
-          <EditorialSection key={section.id} section={section} addToCart={addToCart} />
+          <EditorialSection key={section.id} section={section} />
         ))}
 
         <Manifesto />
-        <Newsletter />
+        <div id="newsletter">
+          <Newsletter onSuccess={() => setShowSuccess(true)} />
+        </div>
       </main>
 
       <Footer />
-
-      {/* Cart Drawer */}
-      {isCartOpen && (
-        <div className="fixed inset-0 z-[60] overflow-hidden">
-          <div className="absolute inset-0 bg-[#4A4542]/20 backdrop-blur-sm transition-opacity" onClick={() => setIsCartOpen(false)}></div>
-
-          <div className="absolute inset-y-0 right-0 max-w-md w-full flex animate-slide-in">
-            <div className="w-full h-full flex flex-col bg-[#FAFAF9] shadow-2xl">
-              <div className="flex items-center justify-between px-8 py-8 border-b border-[#EAE6DF]">
-                <h2 className="text-2xl font-serif text-[#4A4542]">Sua Sacola</h2>
-                <button onClick={() => setIsCartOpen(false)} className="text-[#9CA3AF] hover:text-[#4A4542] transition">
-                  <X size={24} />
-                </button>
-              </div>
-
-              <div className="flex-1 py-8 px-8 overflow-y-auto">
-                {cart.length === 0 ? (
-                  <div className="h-full flex flex-col items-center justify-center text-[#9CA3AF]">
-                    <ShoppingBag size={48} className="mb-4 opacity-20" />
-                    <p className="font-light">Sua sacola está vazia.</p>
-                    <button onClick={() => setIsCartOpen(false)} className="mt-4 text-[#4A4542] border-b border-[#4A4542] pb-0.5 hover:text-[#B59E75] hover:border-[#B59E75] transition">
-                      Voltar à loja
-                    </button>
-                  </div>
-                ) : (
-                  <ul className="space-y-8">
-                    {cart.map((item, idx) => (
-                      <li key={idx} className="flex py-2">
-                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden bg-[#EAE6DF] rounded-sm">
-                          <img src={item.image} alt={item.name} className="h-full w-full object-cover mix-blend-multiply" />
-                        </div>
-                        <div className="ml-6 flex flex-1 flex-col justify-between py-1">
-                          <div>
-                            <div className="flex justify-between text-lg font-serif text-[#4A4542]">
-                              <h3>{item.name}</h3>
-                              <p>R$ {item.price.toFixed(2)}</p>
-                            </div>
-                            <p className="mt-1 text-sm text-[#78716C]">{item.category}</p>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => removeFromCart(idx)}
-                            className="text-sm text-[#9CA3AF] hover:text-red-400 text-left transition"
-                          >
-                            Remover
-                          </button>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-
-              {cart.length > 0 && (
-                <div className="border-t border-[#EAE6DF] px-8 py-8 bg-[#FAFAF9]">
-                  <div className="flex justify-between text-xl font-serif text-[#4A4542] mb-6">
-                    <p>Total</p>
-                    <p>R$ {cartTotal.toFixed(2).replace('.', ',')}</p>
-                  </div>
-                  <button className="w-full bg-[#8A9A8A] text-[#FAFAF9] py-4 rounded-sm font-medium hover:bg-[#768576] transition shadow-sm">
-                    Finalizar Pedido
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
+
+export default App;
