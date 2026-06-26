@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Menu, X, Heart, ShieldAlert, ArrowRight, Instagram, Mail, Check, Star } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 
 // --- PALETA DE CORES (Tailwind Classes & Hex References) ---
 // Areia (Bege): bg-[#EAE6DF]
@@ -586,6 +587,9 @@ const App = () => {
       </main>
 
       <Footer />
+
+      {/* Vercel Analytics — métricas privadas, sem cookies (LGPD-friendly) */}
+      <Analytics />
     </div>
   );
 }

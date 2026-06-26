@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FAFAF9"/>
+      <stop offset="1" stop-color="#EAE6DF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fundo -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Cruz ao fundo, discreta -->
+  <g opacity="0.06">
+    <rect x="582" y="140" width="36" height="350" rx="18" fill="#4A4542"/>
+    <rect x="470" y="240" width="260" height="36" rx="18" fill="#4A4542"/>
+  </g>
+
+  <!-- Eyebrow -->
+  <text x="600" y="250" text-anchor="middle" font-family="'Inter', sans-serif" font-size="20" font-weight="500" letter-spacing="6" fill="#B59E75" text-transform="uppercase">ARTE SACRA &amp; COTIDIANO</text>
+
+  <!-- Nome -->
+  <text x="600" y="345" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="92" font-weight="600" fill="#4A4542">Santo Hábito</text>
+
+  <!-- Tagline -->
+  <text x="600" y="415" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="36" font-style="italic" fill="#8A9A8A">O sagrado, feito cotidiano.</text>
+
+  <!-- Filete -->
+  <rect x="540" y="470" width="120" height="2" fill="#B59E75" opacity="0.5"/>
+</svg>
