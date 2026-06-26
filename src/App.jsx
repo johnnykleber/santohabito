@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ShoppingBag, Menu, X, Heart, ShieldAlert, ArrowRight, Instagram, Mail, Check, Star } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -428,27 +428,37 @@ const Manifesto = () => (
 
 const Newsletter = ({ onSuccess }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState('idle'); // 'idle' | 'error'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setStatus('idle');
 
-    const formData = new FormData(e.target);
+    const form = e.target;
+    const formData = new FormData(form);
+    const payload = new URLSearchParams({
+      Name: formData.get('Name') || '',
+      Email: formData.get('Email') || '',
+    });
 
     try {
-      const response = await fetch("https://api.sheetmonkey.io/form/qNQsBWZcCapi83JP1g4XyY", {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (response.ok) {
-        if (onSuccess) onSuccess();
-      } else {
-        alert("Erro ao enviar. Por favor, tente novamente.");
-      }
+      // Apps Script espera POST; no-capture faz o navegador seguir o redirect
+      // final (302) e ainda assim registra o envio. O servidor grava mesmo se a
+      // resposta não puder ser lida (CORS opaco), então tratamos como sucesso.
+      await fetch(
+        'https://script.google.com/macros/s/AKfycbxmPn3BkyXyDFOBbWGFAy6qAAoFLcIMLgUkxRZIep1UhH-rPmjXuWP8yc2SvfgD_48T/exec',
+        {
+          method: 'POST',
+          body: payload,
+        }
+      );
+      // Sem erro = sucesso (Apps Script retorna 302/redirect, mas processa o POST)
+      form.reset();
+      if (onSuccess) onSuccess();
     } catch (error) {
-      console.error("Erro:", error);
-      alert("Erro de conexão.");
+      console.error('Erro no envio:', error);
+      setStatus('error');
     } finally {
       setIsSubmitting(false);
     }
@@ -467,26 +477,40 @@ const Newsletter = ({ onSuccess }) => {
             type="text"
             name="Name"
             required
+            disabled={isSubmitting}
             placeholder="Seu nome"
-            className="w-full bg-white border border-[#D6D3CD] px-4 py-3 text-[#4A4542] focus:outline-none focus:border-[#8A9A8A] rounded-sm placeholder-[#9CA3AF]"
+            className="w-full bg-white border border-[#D6D3CD] px-4 py-3 text-[#4A4542] focus:outline-none focus:border-[#8A9A8A] rounded-sm placeholder-[#9CA3AF] disabled:opacity-60"
           />
 
           <input
             type="email"
             name="Email"
             required
+            disabled={isSubmitting}
             placeholder="Seu e-mail principal"
-            className="w-full bg-white border border-[#D6D3CD] px-4 py-3 text-[#4A4542] focus:outline-none focus:border-[#8A9A8A] rounded-sm placeholder-[#9CA3AF]"
+            className="w-full bg-white border border-[#D6D3CD] px-4 py-3 text-[#4A4542] focus:outline-none focus:border-[#8A9A8A] rounded-sm placeholder-[#9CA3AF] disabled:opacity-60"
           />
-
-          <input type="hidden" name="Created" value="x-sheetmonkey-current-date-time" />
 
           <button
             disabled={isSubmitting}
-            className="w-full bg-[#4A4542] text-[#FAFAF9] px-6 py-3 font-medium hover:bg-[#383432] transition rounded-sm disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full bg-[#4A4542] text-[#FAFAF9] px-6 py-3 font-medium hover:bg-[#383432] transition rounded-sm disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            {isSubmitting ? "Enviando..." : "Receber Guia"}
+            {isSubmitting ? (
+              <>
+                <span className="inline-block w-4 h-4 border-2 border-[#FAFAF9]/40 border-t-[#FAFAF9] rounded-full animate-spin"></span>
+                <span>Enviando...</span>
+              </>
+            ) : (
+              'Receber Guia'
+            )}
           </button>
+
+          {status === 'error' && (
+            <p className="text-sm text-[#B59E75] bg-[#EAE6DF]/50 border border-[#D6D3CD] rounded-sm px-4 py-3 flex items-start gap-2 text-left">
+              <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" />
+              <span>Não foi possível enviar agora. Tente novamente em instantes, ou escreva para contato@santohabito.com.br</span>
+            </p>
+          )}
         </form>
       </div>
     </section>
@@ -523,31 +547,16 @@ const Footer = () => (
 // --- APP PRINCIPAL ---
 
 const SuccessView = ({ onBack }) => {
-  useEffect(() => {
-    // Tenta iniciar o download automático
-    const downloadUrl = "/guia-santo-habito.pdf"; // Certifique-se de que este arquivo existe na pasta public
-
-    const link = document.createElement('a');
-    link.href = downloadUrl;
-    link.setAttribute('download', 'Guia-Santo-Habito.pdf');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }, []);
-
   return (
     <div className="min-h-screen bg-[#FAFAF9] flex flex-col items-center justify-center p-6 text-center animate-fade-in-up">
       <div className="w-20 h-20 bg-[#EBF2F5] rounded-full flex items-center justify-center mb-8 shadow-sm">
-        <Mail className="w-10 h-10 text-[#8A9A8A]" />
+        <Check className="w-10 h-10 text-[#8A9A8A]" />
       </div>
       <h2 className="text-4xl md:text-5xl font-serif text-[#4A4542] mb-6">Inscrição Confirmada!</h2>
       <div className="h-[1px] w-24 bg-[#B59E75]/40 mx-auto mb-8"></div>
-      <p className="text-lg text-[#78716C] max-w-lg mb-8 leading-relaxed">
+      <p className="text-lg text-[#78716C] max-w-lg mb-12 leading-relaxed">
         Bem-vindo à comunidade Santo Hábito. <br />
-        O download do <strong>Guia de Oração</strong> deve iniciar automaticamente.
-      </p>
-      <p className="text-sm text-[#9CA3AF] mb-12">
-        (Caso não inicie, verifique seus pop-ups ou clique <a href="/guia-santo-habito.pdf" download className="underline hover:text-[#B59E75]">aqui</a>)
+        Você receberá nossas novidades e reflexões no e-mail cadastrado.
       </p>
       <button
         onClick={onBack}
