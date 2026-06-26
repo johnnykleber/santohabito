@@ -51,8 +51,7 @@ Schema.org `Organization`:
 }
 ```
 
-> Nota: o handle exato do Instagram precisa ser confirmado; deixarei como
-> placeholder verificável até confirmar. Se não houver certeza, removo o `sameAs`.
+> Handle do Instagram confirmado: @santohabito.
 
 ### A3. Arquivos para crawlers
 
