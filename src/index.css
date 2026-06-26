@@ -3,3 +3,16 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* O #root não deve herdar restrições de largura do template Vite.
+   O layout do Santo Hábito é em largura total controlada por containers internos. */
+#root {
+  min-height: 100vh;
+}
+
+/* Respeitar usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

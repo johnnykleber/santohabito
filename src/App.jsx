@@ -227,27 +227,46 @@ const Navigation = () => {
 };
 
 const Hero = () => (
-  <header className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#FAFAF9] pt-20">
-    {/* Textura de papel sutil */}
-    <div className="absolute inset-0 z-0 opacity-40 mix-blend-multiply" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cream-paper.png')" }}></div>
+  <header className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#FAFAF9] pt-20">
+    {/* Textura de papel sutil (gerada em CSS — sem dependência externa) */}
+    <div
+      className="absolute inset-0 z-0 opacity-[0.28] mix-blend-multiply"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle at 18% 28%, #d8d2c4 0, transparent 42%), radial-gradient(circle at 82% 72%, #dcd5c6 0, transparent 46%)",
+      }}
+    ></div>
 
     <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-      <span className="block text-[#B59E75] uppercase tracking-[0.25em] text-xs md:text-sm mb-6 animate-fade-in-up font-medium">
-        Arte Sacra & Cotidiano
-      </span>
-      <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-[#4A4542] leading-[1.1] mb-8 animate-fade-in-up delay-100">
+      <div className="flex items-center justify-center gap-3 mb-7 animate-fade-in-up">
+        <span className="h-[1px] w-8 bg-[#B59E75]/50 hidden sm:block"></span>
+        <span className="block text-[#B59E75] uppercase tracking-[0.25em] text-xs md:text-sm font-medium">
+          Arte Sacra &amp; Cotidiano
+        </span>
+        <span className="h-[1px] w-8 bg-[#B59E75]/50 hidden sm:block"></span>
+      </div>
+      <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-[#4A4542] leading-[1.08] tracking-[-0.01em] mb-9 animate-fade-in-up delay-100">
         A fé cabe na<br />
         <i className="font-serif italic text-[#8A9A8A]">vida real.</i>
       </h1>
-      <p className="max-w-xl mx-auto text-lg md:text-xl text-[#78716C] font-light leading-relaxed mb-12 animate-fade-in-up delay-200">
+      <p className="max-w-xl mx-auto text-base md:text-lg text-[#78716C] font-light leading-relaxed mb-12 tracking-[0.01em] animate-fade-in-up delay-200">
         Objetos de linho, cerâmica e madeira desenhados para unir a tradição católica com a leveza do seu lar.
       </p>
 
       <div className="flex flex-col sm:flex-row justify-center gap-6 animate-fade-in-up delay-300">
-        <a href="#aprender-brincando" className="group flex items-center justify-center gap-3 px-10 py-4 bg-[#8A9A8A] text-[#FAFAF9] hover:bg-[#768576] transition rounded-sm shadow-sm hover:shadow-md">
+        <a
+          href="#aprender-brincando"
+          className="group flex items-center justify-center gap-3 px-10 py-4 bg-[#8A9A8A] text-[#FAFAF9] hover:bg-[#768576] transition rounded-sm shadow-[0_8px_24px_-10px_rgba(74,69,66,0.5)] hover:shadow-[0_12px_28px_-10px_rgba(74,69,66,0.55)]"
+        >
           <span className="tracking-wide">Explorar Coleção</span>
           <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform opacity-80" />
         </a>
+      </div>
+
+      {/* Pista de scroll */}
+      <div className="hidden md:flex flex-col items-center gap-2 mt-16 animate-fade-in-up delay-500">
+        <span className="text-[10px] uppercase tracking-[0.2em] text-[#9a948a]">Role para descobrir</span>
+        <span className="w-[1px] h-8 bg-gradient-to-b from-[#B59E75]/50 to-transparent"></span>
       </div>
     </div>
   </header>
@@ -274,12 +293,11 @@ const EditorialSection = ({ section }) => (
           const isReversed = idx % 2 !== 0;
 
           return (
-            <div key={product.id} className={`flex flex-col md:flex-row ${isReversed ? 'md:flex-row-reverse' : ''} gap-12 md:gap-24 items-center`}>
+            <div key={product.id} className={`flex flex-col md:flex-row ${isReversed ? 'md:flex-row-reverse' : ''} gap-12 md:gap-20 items-center`}>
 
-              {/* Imagem Editorial */}
               {/* Imagem Editorial ou Placeholder */}
               <div className="w-full md:w-1/2 relative group">
-                <div className={`aspect-[3/4] overflow-hidden rounded-sm relative shadow-sm ${product.image ? 'bg-[#EAE6DF]' : 'bg-[#E5E5E5] flex items-center justify-center'}`}>
+                <div className={`aspect-[3/4] overflow-hidden rounded-sm relative ${product.image ? 'bg-[#EAE6DF] shadow-[0_24px_50px_-28px_rgba(74,69,66,0.55)]' : 'bg-[#E5E5E5] flex items-center justify-center shadow-sm'}`}>
 
                   {product.image ? (
                     <>
@@ -287,12 +305,12 @@ const EditorialSection = ({ section }) => (
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-1000 ease-out grayscale-[10%] group-hover:grayscale-0"
+                        className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-1000 ease-out grayscale-[4%] group-hover:grayscale-0"
                       />
 
-                      {/* Tag Personalizada (ex: ECO-DESIGN) */}
+                      {/* Tag Personalizada (ex: ECO-DESIGN) — refinada */}
                       {product.tag && (
-                        <div className="absolute top-6 left-6 z-20 bg-[#FAFAF9] px-4 py-2 shadow-sm border border-[#D6D3CD]/50">
+                        <div className="absolute top-6 left-6 z-20 bg-[#FAFAF9] px-4 py-2 shadow-[0_6px_18px_-8px_rgba(0,0,0,0.25)] border border-[#D6D3CD]/50">
                           <span className="text-[#8A9A8A] uppercase tracking-widest text-xs font-serif font-medium">{product.tag}</span>
                         </div>
                       )}
@@ -318,20 +336,15 @@ const EditorialSection = ({ section }) => (
                   )}
                 </div>
 
-                {/* Legenda Flutuante (Apenas se tiver imagem) */}
-                {product.image && (
-                  <div className={`absolute -bottom-6 ${isReversed ? '-left-6' : '-right-6'} bg-[#FAFAF9] p-6 shadow-xl max-w-xs hidden md:block z-20 border border-[#EAE6DF]`}>
-                    <p className="font-serif italic text-[#78716C] text-sm leading-relaxed">"{product.description.slice(0, 60)}..."</p>
-                  </div>
-                )}
+                {/* Legenda flutuante removida — a descrição completa já aparece ao lado da imagem */}
               </div>
 
               {/* Conteúdo Texto */}
               <div className="w-full md:w-1/2 space-y-8">
                 <div>
-                  <span className="text-xs font-bold text-[#8A9A8A] uppercase tracking-widest mb-3 block">{product.category}</span>
-                  <h3 className="text-4xl font-serif text-[#4A4542] leading-tight mb-6">{product.name}</h3>
-                  <p className="text-lg text-[#78716C] leading-relaxed font-light">{product.description}</p>
+                  <span className="text-xs font-bold text-[#8A9A8A] uppercase tracking-widest mb-4 block after:content-[''] after:inline-block after:w-4 after:h-[1px] after:bg-[#8A9A8A]/50 after:align-middle after:ml-2.5">{product.category}</span>
+                  <h3 className="text-4xl font-serif text-[#4A4542] leading-tight tracking-[-0.01em] mb-6">{product.name}</h3>
+                  <p className="text-lg text-[#78716C] leading-relaxed font-light md:max-w-[92%]">{product.description}</p>
                 </div>
 
                 <div className="border-t border-[#D6D3CD] pt-8">
@@ -361,7 +374,7 @@ const EditorialSection = ({ section }) => (
                     ) : product.comingSoon ? (
                       <a
                         href="#newsletter"
-                        className="w-full sm:w-auto bg-[#4A4542] text-[#FAFAF9] hover:bg-[#383432] px-8 py-4 rounded-sm transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-3 group"
+                        className="w-full sm:w-auto bg-[#4A4542] text-[#FAFAF9] hover:bg-[#383432] px-8 py-4 rounded-sm transition-all shadow-sm hover:shadow-md hover:-translate-y-px flex items-center justify-center gap-3 group"
                       >
                         <span className="tracking-wide font-medium">Estou Interessado</span>
                         <Mail size={18} className="group-hover:translate-x-1 transition-transform opacity-80" />
@@ -371,7 +384,7 @@ const EditorialSection = ({ section }) => (
                         href={product.mlLink || "https://lista.mercadolivre.com.br/_CustId_260840432"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full sm:w-auto bg-[#FFE600] text-[#2D3277] hover:bg-[#F3D900] px-8 py-4 rounded-sm transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-3 group"
+                        className="w-full sm:w-auto bg-[#FFE600] text-[#2D3277] hover:bg-[#F3D900] px-8 py-4 rounded-sm transition-all shadow-[0_8px_22px_-10px_rgba(255,230,0,0.6)] hover:shadow-[0_12px_26px_-10px_rgba(255,230,0,0.65)] hover:-translate-y-px flex items-center justify-center gap-3 group"
                       >
                         <span className="tracking-wide font-bold">Comprar no Mercado Livre</span>
                         <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -401,8 +414,14 @@ const Manifesto = () => (
         Acreditamos na beleza que catequiza. No design que serve à liturgia. Na rotina que vira oração.
       </p>
     </div>
-    {/* Background Texture */}
-    <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/linen.png')" }}></div>
+    {/* Textura de fundo (CSS — sem dependência externa) */}
+    <div
+      className="absolute top-0 left-0 w-full h-full opacity-[0.08] pointer-events-none"
+      style={{
+        backgroundImage:
+          "repeating-linear-gradient(45deg, rgba(250,250,249,0.6) 0, rgba(250,250,249,0.6) 1px, transparent 1px, transparent 4px), repeating-linear-gradient(-45deg, rgba(250,250,249,0.6) 0, rgba(250,250,249,0.6) 1px, transparent 1px, transparent 4px)",
+      }}
+    ></div>
   </section>
 );
 
