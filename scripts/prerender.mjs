@@ -44,7 +44,7 @@ for (const section of editorialSections) {
         url: `${SITE}/#${section.id}`,
         price: p.price.toFixed(2),
         priceCurrency: 'BRL',
-        availability: madeToOrder ? 'https://schema.org/PreOrder' : 'https://schema.org/InStock',
+        availability: madeToOrder ? 'https://schema.org/MadeToOrder' : 'https://schema.org/InStock',
         seller: ORG,
       },
     })
