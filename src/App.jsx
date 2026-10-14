@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ShoppingBag, Menu, X, Heart, ShieldAlert, ArrowRight, Instagram, Mail, Check, Star } from 'lucide-react';
 import { Analytics } from '@vercel/analytics/react';
+import { editorialSections } from './data/catalog.js';
+import GuidesSection from './components/GuidesSection.jsx';
 
 // --- PALETA DE CORES (Tailwind Classes & Hex References) ---
 // Areia (Bege): bg-[#EAE6DF]
@@ -10,167 +12,6 @@ import { Analytics } from '@vercel/analytics/react';
 // Azul Mariano (Pálido): bg-[#EBF2F5]
 // Texto Escuro (Terra): text-[#4A4542]
 
-// --- DADOS EDITORIAIS (Storytelling) ---
-const editorialSections = [
-  {
-    id: "aprender-brincando",
-    title: "Aprender Brincando",
-    subtitle: "Lançamento Exclusivo",
-    bgColor: "bg-[#EBF2F5]", // Azul Mariano Pálido
-    products: [
-      {
-        id: 201,
-        name: "Kit Litúrgico 'Pequeno Celebrante'",
-        category: "Brinquedo Educativo",
-        price: 159.90,
-        mlLink: "https://lista.mercadolivre.com.br/_CustId_260840432",
-        image: "/products/kit-liturgico-real.jpg",
-        description: "A criança aprende amando e imitando. Este conjunto completo (14 peças) permite que os pequenos compreendam a sacralidade da Missa através do toque. Do Cálice às Galhetas, cada item foi desenhado para mãos curiosas que buscam o céu.",
-        details: "Sob Encomenda • 14 Peças (Cálice, Cibório, Castiçais...) • Bioplástico PLA"
-      }
-    ]
-  },
-  {
-    id: "pequenos-guardioes",
-    title: "Pequenos Guardiões",
-    subtitle: "Chaveiros Low Poly Pintados à Mão",
-    bgColor: "bg-[#F3F4F6]", // Cinza Suave
-    products: [
-      {
-        id: 101,
-        name: "São José",
-        category: "Coleção Low Poly",
-        price: 35.90,
-        mlLink: "https://lista.mercadolivre.com.br/_CustId_260840432",
-        image: "/products/low-poly/sao-jose-real.jpg",
-        description: "Guardião silencioso. Ideal para chaves de casa. Traz o lírio da pureza e o Menino Jesus. Uma lembrança constante da proteção paterna.",
-        details: "Sob Encomenda • Pintado à Mão • Marrom, Branco, Verde"
-      },
-      {
-        id: 102,
-        name: "Santo Antônio",
-        category: "Coleção Low Poly",
-        price: 35.90,
-        image: "/products/low-poly/santo-antonio-real.jpg",
-        description: "Para quem busca bênçãos diárias. Representado com o Menino Jesus, símbolo de proximidade com Deus. O Santo dos milagres no seu bolso.",
-        details: "Sob Encomenda • Pintado à Mão • Marrom Franciscano, Pele, Branco"
-      },
-      {
-        id: 103,
-        name: "Santa Teresinha",
-        category: "Coleção Low Poly",
-        price: 35.90,
-        image: "/products/low-poly/santa-teresinha-real.jpg",
-        description: "Simplicidade e amor nos pequenos gestos. Carrega as rosas e o crucifixo. Uma chuva de rosas para o seu dia a dia.",
-        details: "Sob Encomenda • Pintado à Mão • Marrom Carmelita, Creme, Vermelho"
-      },
-      {
-        id: 104,
-        name: "Nossa Senhora",
-        category: "Coleção Low Poly",
-        price: 35.90,
-        image: "/products/low-poly/nossa-senhora-real.jpg",
-        description: "Proteção materna em todos os caminhos. Manto azul e coroa dourada. A Mãe Soberana, sempre por perto.",
-        details: "Sob Encomenda • Pintado à Mão • Azul Celeste/Royal, Branco, Dourado"
-      },
-      {
-        id: 105,
-        name: "Kit Trindade de Proteção",
-        category: "Coleção Completa",
-        price: 99.90,
-        image: "/products/low-poly/kit-tres-santos.jpg",
-        description: "A união perfeita de proteção e fé. Leve para casa ou presenteie com o conjunto que reúne a família sagrada e os amigos do céu.",
-        details: "Sob Encomenda • Escolha 3 santos do catálogo"
-      }
-    ]
-  },
-  {
-    id: "altar-domestico",
-    title: "O Sagrado em Casa",
-    subtitle: "A beleza da oração no cotidiano",
-    bgColor: "bg-[#FAFAF9]", // Off-White
-    products: [
-      {
-        id: 202,
-        name: "Sagrada Família 'Pedra Viva'",
-        category: "Escultura Contemporânea",
-        price: 129.90,
-        tag: "ECO-DESIGN",
-        image: "/products/sagrada-familia-real.jpg",
-        description: "A solidez da fé esculpida com tecnologia moderna. Uma peça minimalista com textura de granito natural, leve e resistente. O design sem faces foca na linguagem corporal do acolhimento e proteção.",
-        warning: "Peça leve: recomendamos o uso de fita dupla face em locais com vento.",
-        details: "Sob Encomenda • Eco-Mármore (PLA com fibra de pedra) • Acabamento Fosco"
-      },
-
-      {
-        id: 4,
-        name: "Vela Pura Cera",
-        category: "Oração",
-        price: 62.00,
-        image: "https://images.unsplash.com/photo-1603006905003-be475563bc59?q=80&w=800&auto=format&fit=crop",
-        description: "O cheiro suave do mel e a queima limpa. Uma luz dourada que recorda a presença constante de Deus. Sem parafinas, apenas natureza.",
-        details: "Sob Encomenda • 100% Cera de Abelha • Duração 30h"
-      }
-    ]
-  },
-  {
-    id: "sazonal",
-    title: "Tradições Vivas",
-    subtitle: "Edição Limitada de Novembro",
-    bgColor: "bg-[#EAE6DF]", // Areia / Linho
-    isHighlight: true,
-    products: [
-      {
-        id: 3,
-        name: "Kit São Nicolau",
-        category: "Sazonal",
-        price: 39.90,
-        ordersClosed: true,
-        // image removed
-        description: "Resgate a verdadeira história por trás do Natal. Cortadores para biscoitos ou massinha que ensinam sobre o bispo generoso de Mira.",
-        warning: "Material PLA: Use com massinha ou proteja com filme para alimentos.",
-        details: "Sob Encomenda • Design Exclusivo • Biodegradável"
-      }
-    ]
-  },
-  {
-    id: "laboratorio-criativo",
-    title: "Laboratório Criativo",
-    subtitle: "O que vem por aí",
-    bgColor: "bg-[#FAFAF9]", // Off-White
-    products: [
-      {
-        id: 2,
-        name: "Altar 'Vigília'",
-        category: "Decoração Litúrgica",
-        price: 189.90,
-        comingSoon: true,
-        description: "Seu lar é uma igreja doméstica. Este altar foi desenhado em madeira clara para integrar-se à decoração sem perder a sacralidade. Linhas limpas, foco no essencial.",
-        details: "Em Breve • Madeira Clara Maciça • Cera Natural"
-      },
-      {
-        id: 5,
-        name: "Guia Visual da Missa",
-        category: "Educação",
-        price: 29.90,
-        comingSoon: true,
-        // image removed
-        description: "Transforme o 'quanto falta para acabar?' em 'olha o que vem agora!'. Cartões ilustrados em aquarela que explicam a liturgia de forma visual.",
-        details: "Em Breve • Papel Couché Fosco • Anel de metal dourado"
-      },
-      {
-        id: 1,
-        name: "Decenário 'Silêncio'",
-        category: "Educação na Fé",
-        price: 45.90,
-        comingSoon: true,
-        // image removed
-        description: "Não é apenas um brinquedo, é uma introdução tátil à oração. Feito de silicone macio em tons pastéis, ele cai no chão da igreja sem fazer barulho. Perfeito para manter as mãos ocupadas e o coração calmo.",
-        details: "Em Desenvolvimento • Silicone BPA Free • Toque macio"
-      }
-    ]
-  }
-];
 
 // --- COMPONENTES ---
 
@@ -305,7 +146,11 @@ const EditorialSection = ({ section }) => (
                       <div className="absolute inset-0 bg-[#4A4542]/0 group-hover:bg-[#4A4542]/5 transition-colors duration-500 z-10"></div>
                       <img
                         src={product.image}
-                        alt={product.name}
+                        alt={product.imageAlt || product.name}
+                        width={product.imageWidth}
+                        height={product.imageHeight}
+                        loading="lazy"
+                        decoding="async"
                         className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-1000 ease-out grayscale-[4%] group-hover:grayscale-0"
                       />
 
@@ -323,7 +168,7 @@ const EditorialSection = ({ section }) => (
                       <span className="block text-[#B59E75] text-xs uppercase tracking-widest mb-2 font-medium">
                         {product.ordersClosed ? "Encerrado" : "Em Breve"}
                       </span>
-                      <h4 className="font-serif text-[#4A4542] text-xl leading-snug">{product.name}</h4>
+                      <p className="font-serif text-[#4A4542] text-xl leading-snug">{product.name}</p>
                     </div>
                   )}
 
@@ -467,7 +312,7 @@ const Newsletter = ({ onSuccess }) => {
   return (
     <section className="py-24 bg-[#FAFAF9] border-t border-[#EAE6DF]">
       <div className="max-w-xl mx-auto px-6 text-center">
-        <h3 className="text-2xl font-serif text-[#4A4542] mb-4">Guia Gratuito de Oração</h3>
+        <h2 className="text-2xl font-serif text-[#4A4542] mb-4">Guia Gratuito de Oração</h2>
         <p className="text-[#78716C] mb-8 font-light">
           Receba nosso PDF "7 Formas de Criar um Canto de Oração" e inspire-se.
         </p>
@@ -537,6 +382,12 @@ const Footer = () => (
         </a>
       </div>
 
+      <nav aria-label="Guias" className="flex flex-col gap-2 text-sm text-[#78716C] text-center md:text-left">
+        <a href="/canto-de-oracao" className="hover:text-[#4A4542] transition">Canto de oração em casa</a>
+        <a href="/cores-liturgicas" className="hover:text-[#4A4542] transition">Cores litúrgicas</a>
+        <a href="/coroa-do-advento" className="hover:text-[#4A4542] transition">Coroa do Advento</a>
+      </nav>
+
       <div className="text-[#9CA3AF] text-xs text-center md:text-right max-w-xs">
         <p>Avisos legais: Produtos artesanais podem apresentar variações naturais. Cortadores PLA não devem ser expostos ao calor.</p>
       </div>
@@ -588,6 +439,8 @@ const App = () => {
         {editorialSections.map((section) => (
           <EditorialSection key={section.id} section={section} />
         ))}
+
+        <GuidesSection />
 
         <Manifesto />
         <div id="newsletter">
