@@ -47,11 +47,11 @@ Schema.org `Organization`:
   "url": "https://santohabito.com.br/",
   "description": "Arte sacra contemporânea e objetos de fé para o cotidiano.",
   "slogan": "O sagrado, feito cotidiano.",
-  "sameAs": ["https://www.instagram.com/santohabito"]
+  "sameAs": ["https://www.instagram.com/osantohabito"]
 }
 ```
 
-> Handle do Instagram confirmado: @santohabito.
+> Handle do Instagram confirmado: @osantohabito.
 
 ### A3. Arquivos para crawlers
 
