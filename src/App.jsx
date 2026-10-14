@@ -92,7 +92,7 @@ const Hero = () => (
         <i className="font-serif italic text-[#8A9A8A]">vida real.</i>
       </h1>
       <p className="max-w-xl mx-auto text-base md:text-lg text-[#78716C] font-light leading-relaxed mb-12 tracking-[0.01em] animate-fade-in-up delay-200">
-        Objetos de linho, cerâmica e madeira desenhados para unir a tradição católica com a leveza do seu lar.
+        Objetos de fé desenhados para unir a tradição católica com a leveza do seu lar.
       </p>
 
       <div className="flex flex-col sm:flex-row justify-center gap-6 animate-fade-in-up delay-300">
